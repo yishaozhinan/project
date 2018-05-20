@@ -26,8 +26,11 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	/**
-	 * UserService接口login方法实现
+	 * UserService接口
 	 * @see { UserService }
+	 * login()验证用户登录
+	 * register()验证用户注册用户名是否被使用
+	 * saveUser()存入用户注册数据到数据库
 	 * */
 	@Transactional(readOnly=true)
 	@Override

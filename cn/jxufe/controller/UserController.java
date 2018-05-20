@@ -9,11 +9,9 @@ import cn.jxufe.service.UserService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 处理用户请求控制器
@@ -30,7 +28,7 @@ public class UserController {
 	private UserService userService;
 
 	/**
-	 * 处理/login请求
+	 * 处理/login请求，对应用户登录模块
 	 */
 	@RequestMapping(value = "/login")
 	@ResponseBody
@@ -39,14 +37,15 @@ public class UserController {
 		// 根据登录名和密码查找用户，判断用户登录
 		User user = (User) userService.login(userName, userPassword);
 		if (user != null) {
+			//登录成功，返回1
 			session.setAttribute("userName", userName);
 			return "1";
 		} else {
-			// 登录失败，设置失败提示信息，并跳转到登录页面
+			// 登录失败，返回0
 			return "0";
 		}
 	}
-
+	//处理/register请求，对应用户注册模块
 	@RequestMapping(value = "/register")
 	@ResponseBody
 	public Integer register(@RequestParam("userName") String userName,
@@ -60,6 +59,7 @@ public class UserController {
 			return 0;
 		}
 	}
+	//处理/nameIsUsed请求，对应用户注册时，验证用户名是否被使用
 	@RequestMapping(value = "/nameIsUsed")
 	@ResponseBody
 	public String NameIsUsed(@RequestParam("userName") String userName)throws Exception {
